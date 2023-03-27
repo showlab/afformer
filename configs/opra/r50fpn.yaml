@@ -1,0 +1,90 @@
+seed_everything: 42
+data:
+  dataset_train: 
+    class_path: data.OPRA
+    init_args:
+      split: train
+      clip_length_in_frames: 32
+      frames_between_clips: 16
+      frame_rate: 2
+      resize:
+        class_path: torchvision.transforms.Resize
+        init_args:
+          size: 
+            - 256
+            - 256
+          antialias: true
+  dataset_val: 
+    class_path: data.OPRA
+    init_args:
+      split: test
+      clip_length_in_frames: ${data.dataset_train.init_args.clip_length_in_frames}
+      frames_between_clips: ${data.dataset_train.init_args.frames_between_clips}
+      frame_rate: ${data.dataset_train.init_args.frame_rate}
+      resize: ${data.dataset_train.init_args.resize}
+  batch_size_per_gpu: 2
+  num_workers: 2
+model:
+  network:
+    class_path: afformer.Afformer
+    init_args:
+      encoder: 
+        class_path: afformer.FasterRCNNFeaturePyramid
+        init_args:
+          detector: fasterrcnn_resnet50_fpn_v2
+          weights: DEFAULT
+          image_scales:
+            - p4
+            - p3
+            - p2
+          video_scale: p3
+      decoder: 
+        class_path: afformer.FinegrainedDecoder
+        init_args:
+          hidden_channels: 256
+          max_q_thw: 
+            - 1
+            - 64
+            - 64
+          max_kv_thw:
+            - ${data.dataset_train.init_args.clip_length_in_frames}
+            - 32
+            - 32
+          drop_path: 0.0
+      predictor:
+        class_path: afformer.Predictor
+        init_args:
+          hidden_channels: ${model.network.init_args.decoder.init_args.hidden_channels}
+          out_channels: 7
+          classify_action: true
+  solver:
+    optimizer: 
+      class_path: torch.optim.AdamW
+      init_args:
+        lr: 0.0003
+        weight_decay: 0.05
+    lr_scheduler: 
+      class_path: torch.optim.lr_scheduler.CosineAnnealingLR
+      init_args:
+        T_max: ${trainer.max_steps}
+    lr_factors: 
+      encoder: 0.1 
+trainer:
+  default_root_dir: 
+    outputs/opra/r50fpn/4k_lr3e-4_32x16x2_predictor_eps
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        save_top_k: -1
+  num_nodes: 1
+  devices: 8
+  val_check_interval: 1000
+  check_val_every_n_epoch: null
+  max_steps: 4000
+  accelerator: gpu
+  strategy: ddp_find_unused_parameters_false
+  precision: 16-mixed
+  benchmark: false
+  deterministic: false
+  num_sanity_val_steps: 2
+  enable_checkpointing: true    

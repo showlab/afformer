@@ -1,0 +1,87 @@
+seed_everything: 42
+data:
+  dataset_train: 
+    class_path: data.OPRA
+    init_args:
+      split: train
+      clip_length_in_frames: 24
+      frames_between_clips: 12
+      frame_rate: 2
+      resize:
+        class_path: torchvision.transforms.Resize
+        init_args:
+          size: 
+            - 1024
+            - 1024
+          antialias: true
+  dataset_val: 
+    class_path: data.OPRA
+    init_args:
+      split: test
+      clip_length_in_frames: ${data.dataset_train.init_args.clip_length_in_frames}
+      frames_between_clips: ${data.dataset_train.init_args.frames_between_clips}
+      frame_rate: ${data.dataset_train.init_args.frame_rate}
+      resize: ${data.dataset_train.init_args.resize}
+  batch_size_per_gpu: 2
+  num_workers: 2
+model:
+  network:
+    class_path: afformer.Afformer
+    init_args:
+      encoder: 
+        class_path: afformer.ViTDetSimplePyramid
+        init_args:
+          weights: weights/mask_rcnn_vitdet_b_coco.pkl
+          trainable: 1
+      decoder: 
+        class_path: afformer.SimpleDecoder
+        init_args:
+          hidden_channels: 768
+          q_thw: 
+            - 1
+            - 64
+            - 64
+          kv_thw:
+            - ${data.dataset_train.init_args.clip_length_in_frames}
+            - 32
+            - 32
+          drop_path: 0.0
+      predictor:
+        class_path: afformer.Predictor
+        init_args:
+          hidden_channels: ${model.network.init_args.decoder.init_args.hidden_channels}
+          classify_action: true
+          out_channels: 7
+  solver:
+    optimizer: 
+      class_path: torch.optim.AdamW
+      init_args:
+        lr: 0.0002
+        weight_decay: 0.1
+    overrides:
+      pos_embed: 
+        weight_decay: 0.0
+    lr_scheduler: 
+      class_path: torch.optim.lr_scheduler.CosineAnnealingLR
+      init_args:
+        T_max: ${trainer.max_steps}
+    lr_factors: vitdet
+trainer:
+  default_root_dir: 
+    outputs/opra/vitdet_b_eps
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        save_top_k: -1
+  num_nodes: 1
+  devices: 8
+  val_check_interval: 1000
+  check_val_every_n_epoch: null
+  max_steps: 6000
+  accelerator: gpu
+  strategy: ddp_find_unused_parameters_false
+  precision: 16-mixed
+  benchmark: false
+  deterministic: false
+  num_sanity_val_steps: 2
+  enable_checkpointing: true    
