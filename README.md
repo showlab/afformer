@@ -1,6 +1,6 @@
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/affordance-grounding-from-demonstration-video/video-to-image-affordance-grounding-on-opra)](https://paperswithcode.com/sota/video-to-image-affordance-grounding-on-opra?p=affordance-grounding-from-demonstration-video)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/affordance-grounding-from-demonstration-video/video-to-image-affordance-grounding-on-opra-1)](https://paperswithcode.com/sota/video-to-image-affordance-grounding-on-opra-1?p=affordance-grounding-from-demonstration-video)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/affordance-grounding-from-demonstration-video/video-to-image-affordance-grounding-on-epic)](https://paperswithcode.com/sota/video-to-image-affordance-grounding-on-epic?p=affordance-grounding-from-demonstration-video)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/affordance-grounding-from-demonstration-video-1/video-to-image-affordance-grounding-on-opra)](https://paperswithcode.com/sota/video-to-image-affordance-grounding-on-opra?p=affordance-grounding-from-demonstration-video-1)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/affordance-grounding-from-demonstration-video-1/video-to-image-affordance-grounding-on-opra-1)](https://paperswithcode.com/sota/video-to-image-affordance-grounding-on-opra-1?p=affordance-grounding-from-demonstration-video-1)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/affordance-grounding-from-demonstration-video-1/video-to-image-affordance-grounding-on-epic)](https://paperswithcode.com/sota/video-to-image-affordance-grounding-on-epic?p=affordance-grounding-from-demonstration-video-1)
 
 # Affordance Grounding from Demonstration Video to Target Image
 
