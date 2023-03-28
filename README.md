@@ -137,7 +137,7 @@ python demo.py --config configs/opra/vitdet_b.yaml --weight weights/afformer_vit
 
 ![](demo/output2.gif) 
 
-* Hint: we carefully fine-tuned a very strong ViTDet model, which is better than paper reported. [Download it](). 
+* Hint: we carefully fine-tuned a very strong ViTDet model, which is better than paper reported. [Download it](https://drive.google.com/uc?export=download&id=1bvgBwkRJhA2hxInrPPHlwlGH3tNfDciX). 
 
 ## MaskAHand Pre-training
 
