@@ -4,7 +4,7 @@
 
 # Affordance Grounding from Demonstration Video to Target Image
 
-This repository is the official implementation of [Affordance Grounding from Demonstration Video to Target Image](todo):
+This repository is the official implementation of [Affordance Grounding from Demonstration Video to Target Image](https://arxiv.org/abs/2303.14644):
 
 ![](readme.png)
 
