@@ -106,7 +106,7 @@ class OPRA(Dataset):
                 torch.save(self.video_clips.metadata, meta_path)
     
     @staticmethod
-    def to_heatmaps(pointmaps, k_ratio=3.0, offset=1e-6):
+    def to_heatmaps(pointmaps, k_ratio=3.0, offset=1e-10):
         c, h, w  = pointmaps.shape
         k = int(math.sqrt(h*w) / k_ratio)
         if k % 2 == 0:
