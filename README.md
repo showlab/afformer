@@ -145,7 +145,7 @@ python demo.py --config configs/opra/vitdet_b.yaml --weight weights/afformer_vit
 
 ### 1. Hand Interaction Detection
 
-* Downloading our trained hand interaction detector weights in this [url](https://drive.google.com/uc?export=download&id=1Ha_Jo5KJckRKo4bSTIBJ9EE5NDXIhmam). Then put it to [weights/](weights/) folder: ```weights/hircnn_r50fpnv2_849.pth```.
+* Downloading our trained hand interaction detector weights in this [url](https://drive.google.com/file/d/1Q6SLFnn-ztZDjDoFalOhVLsL0nEZWc-w/view?usp=sharing). Then put it to [weights/](weights/) folder: ```weights/hircnn_r50fpnv2_849.pth```.
 
 * The video demo by this hand interaction detector:
 
